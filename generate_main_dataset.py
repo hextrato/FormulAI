@@ -7,7 +7,7 @@ from hextrato import formulai as fai
 
 random.seed(246813579)
 
-noise_ratio = 1.0
+noise_ratio = 0.75
 
 # make dir
 dir_path = "datasets/main"

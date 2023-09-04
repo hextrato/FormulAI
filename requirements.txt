@@ -1,3 +1,4 @@
+# conda create -n formulai python=3.9
 pandas==2.0.2
 numpy==1.25.0
 scikit_learn==1.2.2

@@ -45,13 +45,22 @@ class FAIGenerator():
         self._dataset = {}
         self._dataset["train"] = {'sample': [], 'label': []}
         for f_idx in range(len(self._ATTS_VALUES)):
-            self._dataset["train"]['F'+str(f_idx)] = []
+            if f_idx < self._NO_CATEG_ATTS: 
+                self._dataset["train"]['Fc'+str(f_idx)] = []
+            else:
+                self._dataset["train"]['Fv'+str(f_idx)] = []
         self._dataset["valid"] = {'sample': [], 'label': []}
         for f_idx in range(len(self._ATTS_VALUES)):
-            self._dataset["valid"]['F'+str(f_idx)] = []
+            if f_idx < self._NO_CATEG_ATTS: 
+                self._dataset["valid"]['Fc'+str(f_idx)] = []
+            else:
+                self._dataset["valid"]['Fv'+str(f_idx)] = []
         self._dataset["test"] = {'sample': [], 'label': []}
         for f_idx in range(len(self._ATTS_VALUES)):
-            self._dataset["test"]['F'+str(f_idx)] = []
+            if f_idx < self._NO_CATEG_ATTS:
+                self._dataset["test"]['Fc'+str(f_idx)] = []
+            else:
+                self._dataset["test"]['Fv'+str(f_idx)] = []
     
     def set_attributes(self,categorical,continuous):
         if categorical < 1 or continuous < 1:
@@ -81,7 +90,7 @@ class FAIGenerator():
                 self.set_template_value(t_idx,new_random_value)
         for t_idx in range(len(self._template)):
             if t_idx < self._NO_CATEG_ATTS: 
-                self._template[t_idx] = 'V'+str(self._template[t_idx])
+                self._template[t_idx] = 'C'+str(self._template[t_idx])
             else:
                 if random.random() < self._RANDOM_NOISE:
                     self._template[t_idx] = round(self._template[t_idx] + random.random()*self._RANDOM_NOISE - self._RANDOM_NOISE/2 , 4)
@@ -106,7 +115,10 @@ class FAIGenerator():
         instance_name = ''
         for t_idx in range(len(self._template)):
             if not str(self._template[t_idx]) == 'R':
-                instance_name += 'F'+str(t_idx)+'V'+str(self._template[t_idx])
+                if t_idx < self._NO_CATEG_ATTS: 
+                    instance_name += 'Fc'+str(t_idx)+'C'+str(self._template[t_idx])
+                else:
+                    instance_name += 'Fv'+str(t_idx)+'V'+str(self._template[t_idx])
         instance_name += 'L'+label
         instance_name += 'S'+str(sample)
         self.fill_template_random_values()
@@ -118,7 +130,10 @@ class FAIGenerator():
         self._dataset[split]['sample'].append(instance_name)
         self._dataset[split]['label'].append(label)
         for f_idx in range(len(self._ATTS_VALUES)):
-            self._dataset[split]['F'+str(f_idx)].append(self._template[f_idx])
+            if f_idx < self._NO_CATEG_ATTS: 
+                self._dataset[split]['Fc'+str(f_idx)].append(self._template[f_idx])
+            else:
+                self._dataset[split]['Fv'+str(f_idx)].append(self._template[f_idx])
 
     def json(self):
         return self._dataset["train"],self._dataset["test"]

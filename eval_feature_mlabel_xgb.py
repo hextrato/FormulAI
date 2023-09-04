@@ -1,5 +1,7 @@
 '''
 python eval_feature_mlabel_xgb.py > output/eval_feature_mlabel_xgb-output.txt
+
+python eval_feature_mlabel_xgb.py > output/eval_feature_mlabel_xgb-output-32.txt
 '''
 import argparse
 import pandas as pd
@@ -12,15 +14,17 @@ from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder
 
 random.seed(72)
-features = [1,2,4,8]
-cat_attribs_list = [ ['F0'] , ['F0','F1'] , ['F0','F1','F2','F3'] , ['F0','F1','F2','F3','F4','F5','F6','F7'] ]
+# features = [1,2,4,8]
+features = [16]
+# cat_attribs_list = [ ['Fc0'] , ['Fc0','Fc1'] , ['Fc0','Fc1','Fc2','Fc3'] , ['Fc0','Fc1','Fc2','Fc3','Fc4','Fc5','Fc6','Fc7'] , ['Fc0','Fc1','Fc2','Fc3','Fc4','Fc5','Fc6','Fc7','Fc8','Fc9','Fc10','Fc11','Fc12','Fc13','Fc14','Fc15'] ]
+cat_attribs_list = [ ['Fc0','Fc1','Fc2','Fc3','Fc4','Fc5','Fc6','Fc7','Fc8','Fc9','Fc10','Fc11','Fc12','Fc13','Fc14','Fc15'] ]
 
 for idx in range(len(features)):
     f = features[idx] * 2
     print("========================")
     print ("Features:",f)
     print("========================")
-    dir_path = "datasets/features/"
+    dir_path = "datasets/eval_features/"
     train_dataset_csv = dir_path+'/'+'formulai-'+(str(f).zfill(2))+'-features-train.csv'
     ttest_dataset_csv = dir_path+'/'+'formulai-'+(str(f).zfill(2))+'-features-test.csv'
 
@@ -46,7 +50,7 @@ for idx in range(len(features)):
     best_depth    = 0
     best_f1_test  = 0.0
 
-    for DEPTH in range(4,17):
+    for DEPTH in range(5,21):
         print("------------------------")
         print("DEPTH:",DEPTH)
         print("------------------------")

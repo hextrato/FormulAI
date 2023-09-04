@@ -1,0 +1,31 @@
+(hextrato) C:\Users\hegle\Dropbox\dbgit.hextrato\FormulAI>time
+The current time is:  8:38:11.67
+Enter the new time:
+
+(hextrato) C:\Users\hegle\Dropbox\dbgit.hextrato\FormulAI>python main_mlabel_svm.py > output/main_mlabel_svm-output.txt
+C:\Users\hegle\anaconda3\envs\hextrato\lib\site-packages\sklearn\svm\_base.py:299: ConvergenceWarning: Solver terminated early (max_iter=200000).  Consider pre-processing your data with StandardScaler or MinMaxScaler.
+  warnings.warn(
+
+(hextrato) C:\Users\hegle\Dropbox\dbgit.hextrato\FormulAI>
+(hextrato) C:\Users\hegle\Dropbox\dbgit.hextrato\FormulAI>time
+The current time is:  7:28:59.79
+Enter the new time:
+
+Created: ‎Sunday, ‎August ‎20, ‎2023, ‏‎8:38:11 AM
+Modified: ‎Friday, ‎August ‎25, ‎2023, ‏‎7:28:59 AM
+
+========================
+Noise (ratio): 0.35
+========================
+F1 test: 0.1831494696762914
+Confusion matrix:
+[[36080 35601  6324     0     0     0]
+ [30032 29848  5125     0     0     0]
+ [24149 23675  4181     0     0     0]
+ [18154 17589  3262     0     0     0]
+ [12103 11827  2070     0     0     0]
+ [12001 11936  2063     0     0     0]]
+------------------------
+Best:
+	 F1 test: 0.1831494696762914
+========================

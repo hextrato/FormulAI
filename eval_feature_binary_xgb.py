@@ -1,6 +1,9 @@
 '''
 python eval_feature_binary_xgb.py --label P > output/eval_feature_binary_xgb-P-output.txt
 python eval_feature_binary_xgb.py --label V > output/eval_feature_binary_xgb-V-output.txt
+
+python eval_feature_binary_xgb.py --label P > output/eval_feature_binary_xgb-P-output-32.txt
+python eval_feature_binary_xgb.py --label V > output/eval_feature_binary_xgb-V-output-32.txt
 '''
 import argparse
 import pandas as pd
@@ -19,15 +22,17 @@ if not args.label in ['P','Q','R','S','T','V']:
     raise Exception("Invalid [label] argument: valid values = ['P','Q','R','S','T','V']")
 
 random.seed(72)
-features = [1,2,4,8]
-cat_attribs_list = [ ['F0'] , ['F0','F1'] , ['F0','F1','F2','F3'] , ['F0','F1','F2','F3','F4','F5','F6','F7'] ]
+# features = [1,2,4,8]
+features = [16]
+# cat_attribs_list = [ ['Fc0'] , ['Fc0','Fc1'] , ['Fc0','Fc1','Fc2','Fc3'] , ['Fc0','Fc1','Fc2','Fc3','Fc4','Fc5','Fc6','Fc7'] , ['Fc0','Fc1','Fc2','Fc3','Fc4','Fc5','Fc6','Fc7','Fc8','Fc9','Fc10','Fc11','Fc12','Fc13','Fc14','Fc15'] ]
+cat_attribs_list = [ ['Fc0','Fc1','Fc2','Fc3','Fc4','Fc5','Fc6','Fc7','Fc8','Fc9','Fc10','Fc11','Fc12','Fc13','Fc14','Fc15'] ]
 
 for idx in range(len(features)):
     f = features[idx] * 2
     print("========================")
     print ("Features:",f)
     print("========================")
-    dir_path = "datasets/features/"
+    dir_path = "datasets/eval_features/"
     train_dataset_csv = dir_path+'/'+'formulai-'+(str(f).zfill(2))+'-features-train.csv'
     ttest_dataset_csv = dir_path+'/'+'formulai-'+(str(f).zfill(2))+'-features-test.csv'
 
@@ -67,7 +72,7 @@ for idx in range(len(features)):
     best_Pr_test  = 0.0
     best_Re_test  = 0.0
 
-    for DEPTH in range(3,21): # (10,12):
+    for DEPTH in range(5,21): # (10,12):
         print("------------------------")
         print("DEPTH:",DEPTH)
         print("------------------------")
@@ -90,8 +95,13 @@ for idx in range(len(features)):
         # print(R)
         F1index, = np.where( (2*(P*R)/(P+R)) == max((2*(P*R)/(P+R))))
         F1index = F1index[0]
+        if F1index > 0:
+            TH_avg = (T[F1index-1]+T[F1index])/2.0
+        else:
+            TH_avg = T[F1index]
+            
         for idx in range(len(ttune_pred)):
-            if ttune_pred[idx] < T[F1index]:
+            if ttune_pred[idx] < TH_avg:
                 ttune_pred[idx] = 0
             else:
                 ttune_pred[idx] = 1
@@ -111,7 +121,7 @@ for idx in range(len(features)):
 
         ttest_pred = model.predict_proba(ttest_df)[:, 1]
         for idx in range(len(ttest_pred)):
-            if ttest_pred[idx] < T[F1index]:
+            if ttest_pred[idx] < TH_avg:
                 ttest_pred[idx] = 0
             else:
                 ttest_pred[idx] = 1  
@@ -123,7 +133,7 @@ for idx in range(len(features)):
         if f1_tune > best_f1_tune:
             best_depth   = DEPTH
             best_f1_tune = f1_tune
-            best_th_tune = T[F1index]
+            best_th_tune = TH_avg
             best_f1_test = f1_test
             best_Pr_test = Pr
             best_Re_test = Re

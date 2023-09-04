@@ -1,5 +1,7 @@
 '''
 python eval_noise_mlabel_xgb.py > output/eval_noise_mlabel_xgb-output.txt
+
+python eval_noise_mlabel_xgb.py > output/eval_noise_mlabel_xgb-output_03x.txt
 '''
 import argparse
 import pandas as pd
@@ -12,15 +14,16 @@ from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder
 
 random.seed(72)
-cat_attribs = ['F0','F1','F2','F3']
-noise = {"000":0.000,"025":0.025,"050":0.050,"075":0.075,"100":0.100,"150":0.150,"200":0.200,"250":0.250}
+cat_attribs = ['Fc0','Fc1','Fc2','Fc3']
+# noise = {"000":0.000,"025":0.025,"050":0.050,"075":0.075,"100":0.100,"150":0.150,"200":0.200,"250":0.250}
+noise = {"300":0.300,"350":0.350}
 
 for noise_label in noise:
     noise_ratio = noise[noise_label]
     print("========================")
     print("Noise (ratio):",noise_ratio)
     print("========================")
-    dir_path = "datasets/noise/"
+    dir_path = "datasets/eval_noise/"
     train_dataset_csv = dir_path+'/'+'formulai-'+noise_label+'-noise-train.csv'
     ttest_dataset_csv = dir_path+'/'+'formulai-'+noise_label+'-noise-test.csv'
 
@@ -44,7 +47,7 @@ for noise_label in noise:
     best_depth    = 0
     best_f1_test  = 0.0
 
-    for DEPTH in range(4,17):
+    for DEPTH in range(5,21):
         print("------------------------")
         print("DEPTH:",DEPTH)
         print("------------------------")

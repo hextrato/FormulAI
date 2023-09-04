@@ -1,7 +1,5 @@
 '''
 python eval_feature_mlabel_reg.py > output/eval_feature_mlabel_reg-output.txt
-
-python eval_feature_mlabel_reg.py > output/eval_feature_mlabel_reg-output-32.txt
 '''
 import argparse
 import pandas as pd
@@ -14,10 +12,8 @@ from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder
 
 random.seed(72)
-# features = [1,2,4,8]
-features = [16]
-# cat_attribs_list = [ ['Fc0'] , ['Fc0','Fc1'] , ['Fc0','Fc1','Fc2','Fc3'] , ['Fc0','Fc1','Fc2','Fc3','Fc4','Fc5','Fc6','Fc7'] , ['Fc0','Fc1','Fc2','Fc3','Fc4','Fc5','Fc6','Fc7','Fc8','Fc9','Fc10','Fc11','Fc12','Fc13','Fc14','Fc15'] ]
-cat_attribs_list = [ ['Fc0','Fc1','Fc2','Fc3','Fc4','Fc5','Fc6','Fc7','Fc8','Fc9','Fc10','Fc11','Fc12','Fc13','Fc14','Fc15'] ]
+features = [1,2,4,8,16]
+cat_attribs_list = [ ['Fc0'] , ['Fc0','Fc1'] , ['Fc0','Fc1','Fc2','Fc3'] , ['Fc0','Fc1','Fc2','Fc3','Fc4','Fc5','Fc6','Fc7'] , ['Fc0','Fc1','Fc2','Fc3','Fc4','Fc5','Fc6','Fc7','Fc8','Fc9','Fc10','Fc11','Fc12','Fc13','Fc14','Fc15'] ]
 
 for idx in range(len(features)):
     f = features[idx] * 2
@@ -59,11 +55,6 @@ for idx in range(len(features)):
     ttest_pred = model.predict(ttest_df)
     f1_test = f1_score (ttest_label , ttest_pred, average="weighted")
     print("F1 test:",f1_test)
-
-    #if f1_test > best_f1_test:
-    # best_f1_tune = f1_tune
-    # best_th_tune = T[F1index]
-    #    best_f1_test = f1_test
 
     cm = confusion_matrix (ttest_label, ttest_pred)
     print("Confusion matrix:")

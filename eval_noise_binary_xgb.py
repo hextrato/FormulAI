@@ -1,51 +1,6 @@
 '''
-cls
-
-time > output/main_binary_xgb-P-output-auprc.txt
-
-
-python eval_noise_binary_xgb.py --label P >> output/eval_noise_binary_xgb-P-output-auprc.txt
-
-time >> output/main_binary_xgb-P-output-auprc.txt
-
-
-time > output/main_binary_xgb-V-output-auprc.txt
-
-
-python eval_noise_binary_xgb.py --label V >> output/eval_noise_binary_xgb-V-output-auprc.txt
-
-time >> output/main_binary_xgb-V-output-auprc.txt
-
-
-
-
-
-
-
-
-cls
-
-time > output/main_binary_xgb-P-output-auprc_03x.txt
-
-
-python eval_noise_binary_xgb.py --label P >> output/eval_noise_binary_xgb-P-output-auprc_03x.txt
-
-time >> output/main_binary_xgb-P-output-auprc_03x.txt
-
-
-
-
-cls
-
-time > output/main_binary_xgb-V-output-auprc_03x.txt
-
-
-python eval_noise_binary_xgb.py --label V >> output/eval_noise_binary_xgb-V-output-auprc_03x.txt
-
-time >> output/main_binary_xgb-V-output-auprc_03x.txt
-
-
-
+python eval_noise_binary_xgb.py --label P >> output/eval_noise_binary_xgb-P-output.txt
+python eval_noise_binary_xgb.py --label V >> output/eval_noise_binary_xgb-V-output.txt
 '''
 import argparse
 import pandas as pd
@@ -65,8 +20,7 @@ if not args.label in ['P','Q','R','S','T','V']:
 
 random.seed(72)
 cat_attribs = ['Fc0','Fc1','Fc2','Fc3']
-# noise = {"000":0.000,"025":0.025,"050":0.050,"075":0.075,"100":0.100,"150":0.150,"200":0.200,"250":0.250}
-noise = {"300":0.300,"350":0.350}
+noise = {"000":0.000,"025":0.025,"050":0.050,"075":0.075,"100":0.100,"150":0.150,"200":0.200,"250":0.250,"300":0.300,"350":0.350}
 
 for noise_label in noise:
     noise_ratio = noise[noise_label]
@@ -80,9 +34,6 @@ for noise_label in noise:
     train_df = pd.read_csv(train_dataset_csv)
     ttest_df = pd.read_csv(ttest_dataset_csv)
 
-    # select tuning rows
-    # selRows = train_df[train_df['sample'].str.endswith("S3")].index
-
     # extract binary labels
     train_label_binary = train_df["label"]
     ttest_label_binary = ttest_df["label"]
@@ -91,7 +42,6 @@ for noise_label in noise:
     train_label_binary = [label_binary[item] for item in train_label_binary]
     ttest_label_binary = [label_binary[item] for item in ttest_label_binary]
 
-    # remove subject ID and label
     # remove subject ID and label
     train_df.drop(['sample','label'], axis=1, inplace=True)
     ttest_df.drop(['sample','label'], axis=1, inplace=True)

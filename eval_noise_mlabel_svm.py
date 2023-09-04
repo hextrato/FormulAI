@@ -1,7 +1,5 @@
 '''
 python eval_noise_mlabel_svm.py > output/eval_noise_mlabel_svm-output.txt
-
-python eval_noise_mlabel_svm.py > output/eval_noise_mlabel_svm-output_03x.txt
 '''
 import argparse
 import pandas as pd
@@ -15,8 +13,7 @@ from sklearn.preprocessing import OneHotEncoder
 
 random.seed(72)
 cat_attribs = ['Fc0','Fc1','Fc2','Fc3']
-# noise = {"000":0.000,"025":0.025,"050":0.050,"075":0.075,"100":0.100,"150":0.150,"200":0.200,"250":0.250}
-noise = {"300":0.300,"350":0.350}
+noise = {"000":0.000,"025":0.025,"050":0.050,"075":0.075,"100":0.100,"150":0.150,"200":0.200,"250":0.250,"300":0.300,"350":0.350}
 
 for noise_label in noise:
     noise_ratio = noise[noise_label]
@@ -56,11 +53,6 @@ for noise_label in noise:
     ttest_pred = model.predict(ttest_df)
     f1_test = f1_score (ttest_label , ttest_pred, average="weighted")
     print("F1 test:",f1_test)
-
-    #if f1_test > best_f1_test:
-    # best_f1_tune = f1_tune
-    # best_th_tune = T[F1index]
-    #    best_f1_test = f1_test
 
     cm = confusion_matrix (ttest_label, ttest_pred)
     print("Confusion matrix:")

@@ -1,9 +1,6 @@
 '''
 python eval_noise_binary_reg.py --label P > output/eval_noise_binary_reg-P-output.txt
 python eval_noise_binary_reg.py --label V > output/eval_noise_binary_reg-V-output.txt
-
-python eval_noise_binary_reg.py --label P > output/eval_noise_binary_reg-P-output_03x.txt
-python eval_noise_binary_reg.py --label V > output/eval_noise_binary_reg-V-output_03x.txt
 '''
 import argparse
 import os
@@ -24,8 +21,7 @@ if not args.label in ['P','Q','R','S','T','V']:
 
 random.seed(72)
 cat_attribs = ['Fc0','Fc1','Fc2','Fc3']
-# noise = {"000":0.000,"025":0.025,"050":0.050,"075":0.075,"100":0.100,"150":0.150,"200":0.200,"250":0.250}
-noise = {"300":0.300,"350":0.350}
+noise = {"000":0.000,"025":0.025,"050":0.050,"075":0.075,"100":0.100,"150":0.150,"200":0.200,"250":0.250,"300":0.300,"350":0.350}
 
 for noise_label in noise:
     noise_ratio = noise[noise_label]

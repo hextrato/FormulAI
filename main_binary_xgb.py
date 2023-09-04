@@ -1,20 +1,6 @@
 '''
-cls
-
-time > output/main_binary_xgb-P-output.txt
-
 python main_binary_xgb.py --label P >> output/main_binary_xgb-P-output.txt
-
-time >> output/main_binary_xgb-P-output.txt
-
-
-time > output/main_binary_xgb-V-output.txt
-
 python main_binary_xgb.py --label V >> output/main_binary_xgb-V-output.txt
-
-time >> output/main_binary_xgb-V-output.txt
-
-
 '''
 import argparse
 import pandas as pd
@@ -49,9 +35,6 @@ ttest_dataset_csv = dir_path+'/'+'formulai-'+features+'-features-'+noise_label+'
 train_df = pd.read_csv(train_dataset_csv)
 ttest_df = pd.read_csv(ttest_dataset_csv)
 
-# select tuning rows
-# selRows = train_df[train_df['sample'].str.endswith("S3")].index
-
 # extract binary labels
 train_label_binary = train_df["label"]
 ttest_label_binary = ttest_df["label"]
@@ -60,7 +43,6 @@ label_binary[args.label] = 1
 train_label_binary = [label_binary[item] for item in train_label_binary]
 ttest_label_binary = [label_binary[item] for item in ttest_label_binary]
 
-# remove subject ID and label
 # remove subject ID and label
 train_df.drop(['sample','label'], axis=1, inplace=True)
 ttest_df.drop(['sample','label'], axis=1, inplace=True)

@@ -1,21 +1,6 @@
 '''
-cls
-
-time > output/main_binary_reg-P-output.txt
-
 python main_binary_reg.py --label P >> output/main_binary_reg-P-output.txt
-
-time >> output/main_binary_reg-P-output.txt
-
-
-
-time > output/main_binary_reg-V-output.txt
-
 python main_binary_reg.py --label V >> output/main_binary_reg-V-output.txt
-
-time >> output/main_binary_reg-V-output.txt
-
-
 '''
 import argparse
 import os

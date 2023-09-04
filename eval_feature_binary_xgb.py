@@ -1,9 +1,6 @@
 '''
 python eval_feature_binary_xgb.py --label P > output/eval_feature_binary_xgb-P-output.txt
 python eval_feature_binary_xgb.py --label V > output/eval_feature_binary_xgb-V-output.txt
-
-python eval_feature_binary_xgb.py --label P > output/eval_feature_binary_xgb-P-output-32.txt
-python eval_feature_binary_xgb.py --label V > output/eval_feature_binary_xgb-V-output-32.txt
 '''
 import argparse
 import pandas as pd
@@ -22,10 +19,8 @@ if not args.label in ['P','Q','R','S','T','V']:
     raise Exception("Invalid [label] argument: valid values = ['P','Q','R','S','T','V']")
 
 random.seed(72)
-# features = [1,2,4,8]
-features = [16]
-# cat_attribs_list = [ ['Fc0'] , ['Fc0','Fc1'] , ['Fc0','Fc1','Fc2','Fc3'] , ['Fc0','Fc1','Fc2','Fc3','Fc4','Fc5','Fc6','Fc7'] , ['Fc0','Fc1','Fc2','Fc3','Fc4','Fc5','Fc6','Fc7','Fc8','Fc9','Fc10','Fc11','Fc12','Fc13','Fc14','Fc15'] ]
-cat_attribs_list = [ ['Fc0','Fc1','Fc2','Fc3','Fc4','Fc5','Fc6','Fc7','Fc8','Fc9','Fc10','Fc11','Fc12','Fc13','Fc14','Fc15'] ]
+features = [1,2,4,8,16]
+cat_attribs_list = [ ['Fc0'] , ['Fc0','Fc1'] , ['Fc0','Fc1','Fc2','Fc3'] , ['Fc0','Fc1','Fc2','Fc3','Fc4','Fc5','Fc6','Fc7'] , ['Fc0','Fc1','Fc2','Fc3','Fc4','Fc5','Fc6','Fc7','Fc8','Fc9','Fc10','Fc11','Fc12','Fc13','Fc14','Fc15'] ]
 
 for idx in range(len(features)):
     f = features[idx] * 2
@@ -39,9 +34,6 @@ for idx in range(len(features)):
     train_df = pd.read_csv(train_dataset_csv)
     ttest_df = pd.read_csv(ttest_dataset_csv)
 
-    # select tuning rows
-    # selRows = train_df[train_df['sample'].str.endswith("S3")].index
-
     # extract binary labels
     train_label_binary = train_df["label"]
     ttest_label_binary = ttest_df["label"]
@@ -51,10 +43,8 @@ for idx in range(len(features)):
     ttest_label_binary = [label_binary[item] for item in ttest_label_binary]
 
     # remove subject ID and label
-    # remove subject ID and label
     train_df.drop(['sample','label'], axis=1, inplace=True)
     ttest_df.drop(['sample','label'], axis=1, inplace=True)
-    # cat_attribs = ['F0','F1','F2','F3','F4','F5','F6','F7','F8','F9','F10','F11','F12','F13','F14','F15']
     cat_attribs = cat_attribs_list[idx]
     full_pipeline = ColumnTransformer([('cat', OneHotEncoder(handle_unknown='ignore'), cat_attribs)], remainder='passthrough')
     encoder = full_pipeline.fit(train_df)

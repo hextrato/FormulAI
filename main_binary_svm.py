@@ -1,23 +1,6 @@
 '''
-cls
-
-time > output/main_binary_svm-P-output-2.txt
-
-
-python main_binary_svm.py --label P >> output/main_binary_svm-P-output-2.txt
-
-time >> output/main_binary_svm-P-output-2.txt
-
-cls
-
-time > output/main_binary_svm-V-output-2.txt
-
-
-python main_binary_svm.py --label V >> output/main_binary_svm-V-output-2.txt
-
-time >> output/main_binary_svm-V-output-2.txt
-
-
+python main_binary_svm.py --label P >> output/main_binary_svm-P-output.txt
+python main_binary_svm.py --label V >> output/main_binary_svm-V-output.txt
 '''
 import argparse
 import os
@@ -60,7 +43,6 @@ label_binary[args.label] = 1
 train_label_binary = [label_binary[item] for item in train_label_binary]
 ttest_label_binary = [label_binary[item] for item in ttest_label_binary]
 
-# remove subject ID and label
 # remove subject ID and label
 train_df.drop(['sample','label'], axis=1, inplace=True)
 ttest_df.drop(['sample','label'], axis=1, inplace=True)

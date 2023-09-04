@@ -1,13 +1,5 @@
 '''
-cls
-
-time > output/main_mlabel_reg-output.txt
-
 python main_mlabel_reg.py >> output/main_mlabel_reg-output.txt
-
-time >> output/main_mlabel_reg-output.txt
-
-
 '''
 import argparse
 import pandas as pd
@@ -61,11 +53,6 @@ model.fit(train_df,train_label)
 ttest_pred = model.predict(ttest_df)
 f1_test = f1_score (ttest_label , ttest_pred, average="weighted")
 print("F1 test:",f1_test)
-
-#if f1_test > best_f1_test:
-# best_f1_tune = f1_tune
-# best_th_tune = T[F1index]
-#    best_f1_test = f1_test
 
 cm = confusion_matrix (ttest_label, ttest_pred)
 print("Confusion matrix:")

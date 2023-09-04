@@ -1,11 +1,5 @@
 '''
-time
-
 python main_mlabel_xgb.py > output/main_mlabel_xgb-output.txt
-
-time
-
-
 '''
 import argparse
 import pandas as pd
